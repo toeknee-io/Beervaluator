@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Beervaluator</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="rating">Rating</string>
+    <string name="save_beer">Beer saved!</string>
+    <string name="ounces">Oz</string>
+
+    <color name="white">#FFFFFF</color>
+    <color name="gold">#FFD700</color>
+
+</resources>

@@ -1,0 +1,45 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+<!--
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".DisplaySavedBeersActivity">
+-->
+<group android:id="@+id/menu_sort">
+    <item
+        android:id="@+id/filter_by_all"
+        android:title="All"
+        app:showAsAction="always"
+        ></item>
+
+    <item
+        android:id="@+id/filter_by_beer"
+        android:title="Beer"
+        app:showAsAction="always"
+        ></item>
+
+    <item
+        android:id="@+id/filter_by_store"
+        android:title="Store"
+        app:showAsAction="always"
+        ></item>
+
+    <item
+        android:id="@+id/filter_by_rating"
+        android:title="Rating"
+        app:showAsAction="always"
+        ></item>
+</group>
+    <item
+        android:id="@+id/clearDb"
+        android:title="Clear DB"
+        app:showAsAction="always"
+        ></item>
+
+</menu>
