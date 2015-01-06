@@ -94,7 +94,7 @@
         android:id="@+id/beervaluate"
         android:layout_width="match_parent"
         android:layout_height="@dimen/abc_action_bar_default_height_material"
-        android:onClick="getRating"
+        android:onClick="beervaluate"
         android:text="Beervaluate!"
         android:layout_below="@+id/alcPrice"
         android:layout_alignParentLeft="true"

@@ -6,7 +6,7 @@
         android:id="@+id/beervaluateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Results"
+        android:text="Beervaluation"
         android:textColor="@color/white"
         android:layout_gravity="center"
         android:textSize="30dp"

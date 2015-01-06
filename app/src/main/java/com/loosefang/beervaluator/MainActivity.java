@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.loosefang.beerfinder.db.Beer;
-import com.loosefang.beerfinder.db.BeersDataSource;
 import com.loosefang.dialogs.BeervaluateDialog;
 import com.loosefang.dialogs.SaveBeerDialog;
+import com.parse.ParseObject;
 
 
 public class MainActivity extends FragmentActivity {
@@ -39,15 +39,18 @@ public class MainActivity extends FragmentActivity {
     Double rating;
     String strRating;
 
-    BeersDataSource datasource;
+//    BeersDataSource datasource;
+
+    ParseObject beers;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        datasource = new BeersDataSource(this);
-        datasource.open();
+//        datasource = new BeersDataSource(this);
+//        datasource.open();
 
     }
 
@@ -73,10 +76,34 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getRating(View v) {
+    public void setBeerData() {
+        EditText getBeerName = (EditText) findViewById(R.id.beerName);
+        beerName = getBeerName.getText().toString();
+
+        EditText getStoreName = (EditText) findViewById(R.id.storeName);
+        storeName = getStoreName.getText().toString();
+
+        EditText getPercent = (EditText) findViewById(R.id.alcPercent);
+        alcPercent = getPercent.getText().toString();
+        dPercent = Double.parseDouble(alcPercent);
+
+        EditText getQty = (EditText) findViewById(R.id.alcQty);
+        alcQty = getQty.getText().toString();
+        dQty = Double.parseDouble(alcQty);
+
+        EditText getPrice = (EditText) findViewById(R.id.alcPrice);
+        alcPrice = getPrice.getText().toString();
+        dPrice = Double.parseDouble(alcPrice);
+
+        rating = dPercent * dQty / dPrice;
+    }
+
+    public void beervaluate(View v) {
 
         try {
 
+            setBeerData();
+/*
             EditText getBeerName = (EditText) findViewById(R.id.beerName);
             beerName = getBeerName.getText().toString();
 
@@ -96,7 +123,7 @@ public class MainActivity extends FragmentActivity {
             dPrice = Double.parseDouble(alcPrice);
 
             rating = dPercent * dQty / dPrice;
-
+*/
             String evaluation = "";
             if(rating < 10) {
                 evaluation = "Jerry would probably buy this";
@@ -114,9 +141,10 @@ public class MainActivity extends FragmentActivity {
             this.strRating = String.format("%.1f", rating);
             Log.i(LOGTAG, strRating);
 
+
             Bundle bundle = new Bundle();
-//            bundle.putString("name", beerName);
-//            bundle.putString("store", storeName);
+            bundle.putString("name", beerName);
+            bundle.putString("store", storeName);
             bundle.putString("rating", strRating);
 
             DialogFragment dialog = new BeervaluateDialog();
@@ -131,7 +159,7 @@ public class MainActivity extends FragmentActivity {
 
 /*
     public void saveBeer(View v) throws IOException {
-        getRating(null);
+        beervaluate(null);
 
         XmlSerializer xmlSerializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
@@ -205,10 +233,10 @@ public class MainActivity extends FragmentActivity {
         Intent intent = new Intent(this, DisplaySavedBeersActivity.class);
         startActivity(intent);
     }
-
+/*
     public void createData(View view){
         
-        getRating(null);
+        beervaluate(null);
                 
         Beer beer = new Beer();
         beer.setName(beerName);
@@ -229,5 +257,39 @@ public class MainActivity extends FragmentActivity {
         DialogFragment dialog = new SaveBeerDialog();
         dialog.setArguments(bundle);
         dialog.show(getFragmentManager(), "SaveBeerDialog");
+    }
+*/
+
+    public void createData(View view){
+
+        setBeerData();
+
+        Beer beer = new Beer();
+        beer.setName(beerName);
+        beer.setStore(storeName);
+        beer.setAlcPct(dPercent);
+        beer.setAlcQty(dQty);
+        beer.setPrice(dPrice);
+        beer.setRating(rating);
+
+        beers = new ParseObject("Beers");
+        beers.put("name", beerName);
+        beers.put("location", storeName);
+        beers.put("alcPct", dPercent);
+        beers.put("alcQty", dQty);
+        beers.put("alcPrice", dPrice);
+        beers.put("alcRating", rating);
+
+        beers.saveInBackground();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", beerName);
+        bundle.putString("store", storeName);
+        bundle.putString("rating", strRating);
+
+        DialogFragment dialog = new SaveBeerDialog();
+        dialog.setArguments(bundle);
+        dialog.show(getFragmentManager(), "SaveBeerDialog");
+
     }
 }
